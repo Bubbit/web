@@ -133,8 +133,6 @@ export async function runTests(
       if (allowFailure || passed) {
         resolve(runner);
       } else {
-        console.error('Failed tests:');
-        console.error(sessions.filter(s => !s.passed));
         reject(new Error('Test run did not pass'));
       }
     });
