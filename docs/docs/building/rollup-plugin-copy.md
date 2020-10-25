@@ -1,13 +1,11 @@
-# Building >> Rollup Plugin Copy ||20
+# Building >> Rollup Plugin Copy ||40
 
 A Rollup plugin which copies asset files while retaining the relative folder structure.
 
-## Install
-
-Using npm:
+## Installation
 
 ```
-npm install @web/rollup-plugin-copy --save-dev
+npm install --save-dev @web/rollup-plugin-copy
 ```
 
 ## Usage

@@ -1,5 +1,149 @@
 # @web/test-runner
 
+## 0.9.5
+
+### Patch Changes
+
+- 145a8e6: correctly encode/decode test framework url
+- Updated dependencies [145a8e6]
+  - @web/test-runner-core@0.8.7
+  - @web/test-runner-cli@0.6.7
+
+## 0.9.4
+
+### Patch Changes
+
+- 49fba90: run user plugins after builtin plugins
+
+## 0.9.3
+
+### Patch Changes
+
+- 304558e: fix(test-runner): deduplicated browsers when reporting
+- Updated dependencies [304558e]
+  - @web/test-runner-cli@0.6.6
+  - @web/test-runner-core@0.8.6
+
+## 0.9.2
+
+### Patch Changes
+
+- 4edf123: added option to configure test runner HTML per group
+- cd8928b: separate reporting per browser launcher
+- Updated dependencies [4edf123]
+- Updated dependencies [cd8928b]
+  - @web/test-runner-core@0.8.5
+  - @web/test-runner-cli@0.6.5
+
+## 0.9.1
+
+### Patch Changes
+
+- aadf0fe: Speed up test loading by inling test config and preloading test files.
+- Updated dependencies [416c0d2]
+- Updated dependencies [aadf0fe]
+  - @web/test-runner-chrome@0.7.2
+  - @web/test-runner-cli@0.6.4
+  - @web/test-runner-commands@0.2.1
+  - @web/test-runner-saucelabs@0.1.1
+  - @web/test-runner-core@0.8.4
+  - @web/test-runner-mocha@0.5.1
+
+## 0.9.0
+
+### Minor Changes
+
+- b397a4c: Disabled the in-browser reporter during regular test runs, improving performance.
+
+  Defaulted to the spec reporter instead of the HTML reporter in the browser when debugging. This avoids manipulating the testing environment by default.
+
+  You can opt back into the old behavior by setting the mocha config:
+
+  ```js
+  export default {
+    testFramework: {
+      config: { reporter: 'html' },
+    },
+  };
+  ```
+
+### Patch Changes
+
+- Updated dependencies [b397a4c]
+  - @web/test-runner-mocha@0.5.0
+
+## 0.8.5
+
+### Patch Changes
+
+- c256a08: allow configuring concurrency per browser launcher
+- Updated dependencies [c256a08]
+  - @web/test-runner-cli@0.6.3
+  - @web/test-runner-chrome@0.7.1
+  - @web/test-runner-core@0.8.3
+
+## 0.8.4
+
+### Patch Changes
+
+- 859008b: added experimental mode to test workflows where tests on firefox require the browser window to be focused
+- Updated dependencies [859008b]
+  - @web/test-runner-core@0.8.2
+
+## 0.8.3
+
+### Patch Changes
+
+- 0b5cc82: always print stack traces in errors
+- Updated dependencies [0b5cc82]
+  - @web/test-runner-cli@0.6.2
+
+## 0.8.2
+
+### Patch Changes
+
+- 175b124: fixed reporting multiple test files for a browser
+- 7ec6e94: don't require files option when using groups
+- 438176c: Allow specifying default test group
+- Updated dependencies [175b124]
+- Updated dependencies [7ec6e94]
+- Updated dependencies [438176c]
+  - @web/test-runner-core@0.8.1
+  - @web/test-runner-cli@0.6.1
+
+## 0.8.1
+
+### Patch Changes
+
+- Updated dependencies [80d5814]
+  - @web/test-runner-mocha@0.4.0
+
+## 0.8.0
+
+### Minor Changes
+
+- 2291ca1: replaced HTTP with websocket for server-browser communication
+
+  this improves test speed, especially when a test file makes a lot of concurrent requests
+  it lets us us catch more errors during test execution, and makes us catch them faster
+
+### Patch Changes
+
+- Updated dependencies [2291ca1]
+  - @web/test-runner-chrome@0.7.0
+  - @web/test-runner-cli@0.6.0
+  - @web/test-runner-commands@0.2.0
+  - @web/test-runner-core@0.8.0
+  - @web/test-runner-saucelabs@0.1.0
+
+## 0.7.42
+
+### Patch Changes
+
+- f2d0bb2: avoid using document.baseURI in IE11
+- Updated dependencies [f2d0bb2]
+  - @web/test-runner-mocha@0.3.7
+
 ## 0.7.41
 
 ### Patch Changes

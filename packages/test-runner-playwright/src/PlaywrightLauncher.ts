@@ -16,6 +16,10 @@ export type CreatePageFunction = (args: {
 export class PlaywrightLauncher implements BrowserLauncher {
   public name: string;
   public type = 'playwright';
+  public concurrency?: number;
+  private product: ProductType;
+  private launchOptions: LaunchOptions;
+  private createPageFunction?: CreatePageFunction;
   private config?: TestRunnerCoreConfig;
   private testFiles?: string[];
   private browser?: Browser;
@@ -25,13 +29,21 @@ export class PlaywrightLauncher implements BrowserLauncher {
   private inactivePages: PlaywrightLauncherPage[] = [];
   private testCoveragePerSession = new Map<string, CoverageMapData>();
   private __launchBrowserPromise?: Promise<Browser>;
+  public __experimentalWindowFocus__: boolean;
 
   constructor(
-    private product: ProductType,
-    private launchOptions: LaunchOptions,
-    private createPageFunction?: CreatePageFunction,
+    product: ProductType,
+    launchOptions: LaunchOptions,
+    createPageFunction?: CreatePageFunction,
+    __experimentalWindowFocus__?: boolean,
+    concurrency?: number,
   ) {
+    this.product = product;
+    this.launchOptions = launchOptions;
+    this.createPageFunction = createPageFunction;
+    this.concurrency = concurrency;
     this.name = capitalize(product);
+    this.__experimentalWindowFocus__ = !!__experimentalWindowFocus__;
   }
 
   async initialize(config: TestRunnerCoreConfig, testFiles: string[]) {
@@ -69,6 +81,10 @@ export class PlaywrightLauncher implements BrowserLauncher {
     return this.activePages.has(sessionId);
   }
 
+  getBrowserUrl(sessionId: string) {
+    return this.getPage(sessionId).url();
+  }
+
   async startDebugSession(sessionId: string, url: string) {
     if (!this.debugBrowser) {
       this.debugBrowser = await playwright[this.product].launch({
@@ -77,6 +93,7 @@ export class PlaywrightLauncher implements BrowserLauncher {
         devtools: this.product === 'chromium',
         headless: false,
       });
+      await this.debugBrowser.newContext();
     }
 
     const page = await this.createNewPage(this.debugBrowser);
@@ -90,7 +107,7 @@ export class PlaywrightLauncher implements BrowserLauncher {
   async createNewPage(browser: Browser) {
     const playwrightPage = await (this.createPageFunction
       ? this.createPageFunction({ config: this.config!, browser })
-      : browser.newPage());
+      : browser.contexts()[0]!.newPage());
     return new PlaywrightLauncherPage(this.config!, this.testFiles!, playwrightPage);
   }
 
@@ -115,7 +132,11 @@ export class PlaywrightLauncher implements BrowserLauncher {
     }
 
     if (!this.browser || !this.browser?.isConnected()) {
-      this.__launchBrowserPromise = playwright[this.product].launch(this.launchOptions);
+      this.__launchBrowserPromise = (async () => {
+        const browser = await playwright[this.product].launch(this.launchOptions);
+        await browser.newContext();
+        return browser;
+      })();
       this.browser = await this.__launchBrowserPromise;
       this.__launchBrowserPromise = undefined;
     }

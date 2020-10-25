@@ -1,10 +1,7 @@
 /* eslint-disable */
-const { getRocketValues } = require('@d4kmor/cli');
 
 module.exports = async function () {
-  const defaultValues = await getRocketValues();
   return {
-    ...defaultValues,
     name: 'Modern Web',
     description: 'Guides, tools and libraries for modern web development.',
     socialLinks: [
@@ -19,5 +16,6 @@ module.exports = async function () {
     iconColorMsapplicationTileColor: '#1d3557',
     iconColorThemeColor: '#1d3557',
     analytics: 'UA-131782693-2',
+    socialMediaImage: '/_assets/social-media-image.jpg',
   };
 };

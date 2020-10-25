@@ -1,5 +1,48 @@
 # @web/test-runner-mocha
 
+## 0.5.1
+
+### Patch Changes
+
+- aadf0fe: Speed up test loading by inling test config and preloading test files.
+- Updated dependencies [aadf0fe]
+  - @web/test-runner-core@0.8.4
+
+## 0.5.0
+
+### Minor Changes
+
+- b397a4c: Disabled the in-browser reporter during regular test runs, improving performance.
+
+  Defaulted to the spec reporter instead of the HTML reporter in the browser when debugging. This avoids manipulating the testing environment by default.
+
+  You can opt back into the old behavior by setting the mocha config:
+
+  ```js
+  export default {
+    testFramework: {
+      config: { reporter: 'html' },
+    },
+  };
+  ```
+
+## 0.4.0
+
+### Minor Changes
+
+- 80d5814: release new version of test-runner-mocha
+
+### Patch Changes
+
+- Updated dependencies [80d5814]
+  - @web/test-runner-mocha@0.4.0
+
+## 0.3.7
+
+### Patch Changes
+
+- f2d0bb2: avoid using document.baseURI in IE11
+
 ## 0.3.6
 
 ### Patch Changes

@@ -1,5 +1,23 @@
 # @web/dev-server-core
 
+## 0.2.13
+
+### Patch Changes
+
+- e8ebfcc: ensure user plugins are run after builtin plugins
+
+## 0.2.12
+
+### Patch Changes
+
+- 1ba84e4: Expose webSocketServer on the WebSocketManager in case developers using the Node API want apply their own WebSocket message handling, but reusing the WebSocket Server of the dev server.
+
+## 0.2.11
+
+### Patch Changes
+
+- 2291ca1: export websocket types
+
 ## 0.2.10
 
 ### Patch Changes

@@ -35,6 +35,7 @@ export function createTestSessions(
     const mergedGroupConfig: GroupConfigWithoutOptionals = {
       name: groupConfig.name,
       configFilePath: groupConfig.configFilePath,
+      testRunnerHtml: config.testRunnerHtml,
       browsers: config.browsers,
       files: config.files,
     };
@@ -51,13 +52,17 @@ export function createTestSessions(
       mergedGroupConfig.files = groupConfig.files;
     }
 
+    if (groupConfig.testRunnerHtml != null) {
+      mergedGroupConfig.testRunnerHtml = groupConfig.testRunnerHtml;
+    }
+
     groups.push(mergedGroupConfig);
   }
 
   const sessionGroups: TestSessionGroup[] = [];
   const testSessions: TestSession[] = [];
   const testFiles = new Set<string>();
-  const browsers: BrowserLauncher[] = [];
+  const browsers = new Set<BrowserLauncher>();
 
   for (const group of groups) {
     const baseDir = group.configFilePath ? path.dirname(group.configFilePath) : process.cwd();
@@ -68,17 +73,23 @@ export function createTestSessions(
     }
 
     for (const file of testFilesForGroup) {
-      testFiles.add(file);
+      // Normalize file path because glob returns windows paths with forward slashes:
+      // C:/foo/bar -> C:\foo\bar
+      const normalizedFile = path.normalize(file);
+      testFiles.add(normalizedFile);
     }
 
     const sessionGroup: TestSessionGroup = {
       name: group.name,
       browsers: group.browsers,
       testFiles: testFilesForGroup,
+      testRunnerHtml: group.testRunnerHtml,
       sessionIds: [],
     };
 
-    browsers.push(...group.browsers);
+    for (const browser of group.browsers) {
+      browsers.add(browser);
+    }
 
     for (const testFile of testFilesForGroup) {
       for (const browser of group.browsers) {
@@ -101,5 +112,10 @@ export function createTestSessions(
     }
   }
 
-  return { sessionGroups, testSessions, testFiles: Array.from(testFiles), browsers };
+  return {
+    sessionGroups,
+    testSessions,
+    testFiles: Array.from(testFiles),
+    browsers: Array.from(browsers),
+  };
 }

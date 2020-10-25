@@ -1,4 +1,4 @@
-import { Context, getHtmlPath } from '@web/dev-server-core';
+import { Context } from '@web/dev-server-core';
 import { getAttribute, getTextContent, remove } from '@web/dev-server-core/dist/dom5';
 import { parse, serialize, Document as DocumentAst, Node as NodeAst } from 'parse5';
 import {
@@ -9,6 +9,7 @@ import {
   GeneratedFile,
   File,
 } from 'polyfills-loader';
+import { PARAM_TRANSFORM_SYSTEMJS } from './constants';
 import { findJsScripts } from './findJsScripts';
 
 function findScripts(indexUrl: string, documentAst: DocumentAst) {
@@ -22,13 +23,17 @@ function findScripts(indexUrl: string, documentAst: DocumentAst) {
     let src = getAttribute(scriptNode, 'src');
 
     if (!src) {
-      src = `inline-script-${i}.js?source=${encodeURIComponent(indexUrl)}`;
+      const suffix = type === 'module' ? `&${PARAM_TRANSFORM_SYSTEMJS}=true` : '';
+      src = `inline-script-${i}.js?source=${encodeURIComponent(indexUrl)}${suffix}`;
       inlineScripts.push({
         path: src,
         type,
         content: getTextContent(scriptNode),
       });
       inlineScriptNodes.push(scriptNode);
+    } else if (type === 'module') {
+      const separator = src.includes('?') ? '&' : '?';
+      src = `${src}${separator}${PARAM_TRANSFORM_SYSTEMJS}=true`;
     }
 
     files.push({
@@ -56,9 +61,8 @@ export async function injectPolyfillsLoader(
   context: Context,
   polyfills?: boolean | PolyfillsConfig,
 ): Promise<ReturnValue> {
-  const htmlPath = getHtmlPath(context.path);
   const documentAst = parse(context.body);
-  const { files, inlineScripts, scriptNodes } = findScripts(htmlPath, documentAst);
+  const { files, inlineScripts, scriptNodes } = findScripts(context.url, documentAst);
 
   const polyfillsLoaderConfig = {
     modern: {
@@ -91,7 +95,7 @@ export async function injectPolyfillsLoader(
   const result = originalInjectPolyfillsLoader(serialize(documentAst), polyfillsLoaderConfig);
 
   return {
-    htmlPath,
+    htmlPath: context.url,
     indexHTML: result.htmlString,
     inlineScripts,
     polyfills: result.polyfillFiles,

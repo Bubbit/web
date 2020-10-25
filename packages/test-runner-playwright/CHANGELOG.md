@@ -1,5 +1,52 @@
 # @web/test-runner-playwright
 
+## 0.6.4
+
+### Patch Changes
+
+- 416c0d2: Update dependencies
+- Updated dependencies [416c0d2]
+- Updated dependencies [aadf0fe]
+  - @web/test-runner-coverage-v8@0.2.1
+  - @web/test-runner-core@0.8.4
+
+## 0.6.3
+
+### Patch Changes
+
+- 735658a: share the same browser context across pages
+
+## 0.6.2
+
+### Patch Changes
+
+- c256a08: allow configuring concurrency per browser launcher
+- Updated dependencies [c256a08]
+  - @web/test-runner-core@0.8.3
+
+## 0.6.1
+
+### Patch Changes
+
+- 859008b: added experimental mode to test workflows where tests on firefox require the browser window to be focused
+- Updated dependencies [859008b]
+  - @web/test-runner-core@0.8.2
+
+## 0.6.0
+
+### Minor Changes
+
+- 2291ca1: replaced HTTP with websocket for server-browser communication
+
+  this improves test speed, especially when a test file makes a lot of concurrent requests
+  it lets us us catch more errors during test execution, and makes us catch them faster
+
+### Patch Changes
+
+- Updated dependencies [2291ca1]
+  - @web/test-runner-core@0.8.0
+  - @web/test-runner-coverage-v8@0.2.0
+
 ## 0.5.8
 
 ### Patch Changes

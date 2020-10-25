@@ -1,5 +1,62 @@
 # @web/test-runner-core
 
+## 0.8.7
+
+### Patch Changes
+
+- 145a8e6: correctly encode/decode test framework url
+
+## 0.8.6
+
+### Patch Changes
+
+- 304558e: fix(test-runner): deduplicated browsers when reporting
+
+## 0.8.5
+
+### Patch Changes
+
+- 4edf123: added option to configure test runner HTML per group
+- cd8928b: separate reporting per browser launcher
+
+## 0.8.4
+
+### Patch Changes
+
+- aadf0fe: Speed up test loading by inling test config and preloading test files.
+
+## 0.8.3
+
+### Patch Changes
+
+- c256a08: allow configuring concurrency per browser launcher
+
+## 0.8.2
+
+### Patch Changes
+
+- 859008b: added experimental mode to test workflows where tests on firefox require the browser window to be focused
+
+## 0.8.1
+
+### Patch Changes
+
+- 175b124: fixed reporting multiple test files for a browser
+
+## 0.8.0
+
+### Minor Changes
+
+- 2291ca1: replaced HTTP with websocket for server-browser communication
+
+  this improves test speed, especially when a test file makes a lot of concurrent requests
+  it lets us us catch more errors during test execution, and makes us catch them faster
+
+### Patch Changes
+
+- Updated dependencies [2291ca1]
+  - @web/dev-server-core@0.2.11
+
 ## 0.7.23
 
 ### Patch Changes

@@ -1,5 +1,25 @@
 # @web/dev-server
 
+## 0.0.15
+
+### Patch Changes
+
+- e8ebfcc: ensure user plugins are run after builtin plugins
+- Updated dependencies [e8ebfcc]
+  - @web/dev-server-core@0.2.13
+
+## 0.0.14
+
+### Patch Changes
+
+- 201ffbd: updated esbuild dependency
+
+## 0.0.13
+
+### Patch Changes
+
+- db0cf85: Allow user to set open to false, which should result in the browser not opening. Do a falsy check, instead of null && undefined.
+
 ## 0.0.12
 
 ### Patch Changes

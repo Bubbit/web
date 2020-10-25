@@ -30,13 +30,13 @@
     "start:build": "node packages/dev-server/dist/bin.js --root-dir _site --open",
     "test": "yarn test:node && yarn test:browser && node scripts/workspaces-scripts-bin.mjs test:ci",
     "test:browser": "node packages/test-runner/dist/bin.js \"packages/*/test-browser/**/*.test.{js,ts}\"",
-    "test:node": "mocha \"packages/*/test/**/*.test.{ts,js,mjs,cjs}\" --require ts-node/register --reporter dot --exit --retries 3",
+    "test:node": "mocha \"packages/*/test/**/*.test.{ts,js,mjs,cjs}\" --require ts-node/register --exit --retries 3",
     "update-dependency": "node scripts/update-dependency.js"
   },
   "dependencies": {
-    "@d4kmor/cli": "^0.5.1",
-    "@d4kmor/launch": "^0.4.1",
-    "@d4kmor/search": "^0.1.0"
+    "@d4kmor/cli": "^0.5.5",
+    "@d4kmor/launch": "^0.4.10",
+    "@d4kmor/search": "^0.1.2"
   },
   "devDependencies": {
     "@changesets/cli": "^2.9.2",
@@ -94,7 +94,8 @@
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-empty-interface": "off",
       "@typescript-eslint/no-unused-vars": "error",
-      "@typescript-eslint/no-var-requires": "off"
+      "@typescript-eslint/no-var-requires": "off",
+      "@typescript-eslint/ban-ts-comment": "off"
     }
   },
   "husky": {
@@ -125,6 +126,7 @@
     ]
   },
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "integration/*"
   ]
 }
