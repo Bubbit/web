@@ -9,6 +9,12 @@ module.exports = /** @type {import('@web/test-runner').TestRunnerConfig} */ ({
   coverage: true,
   coverageConfig: {
     nativeInstrumentation: false,
+    threshold: {
+      statements: 55,
+      branches: 90,
+      functions: 50,
+      lines: 50
+    },
   },
   plugins: [
     babel({
